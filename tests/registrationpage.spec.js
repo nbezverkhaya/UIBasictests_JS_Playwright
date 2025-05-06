@@ -1,6 +1,6 @@
 const {test} = require('@playwright/test');
 
-test.only('Registration page', async ({page}) => {
+test('Registration page', async ({page}) => {
 
 await page.goto('https://rahulshettyacademy.com/client/');
 const regButton = page.locator(".text-reset");
@@ -14,7 +14,7 @@ const checkbox = page.locator("input[type='checkbox']");
 const myname = "Natnat";
 const mylastname = "draft";
 const myphone = "1234567890";
-const myemeil = "tests754@gmail.com";
+const myemeil = "tests7543@gmail.com";
 const mypassword = "Test123321!";
 const registrerButton = page.locator("#login");
 const createdLogIn = page.locator(".btn.btn-primary");

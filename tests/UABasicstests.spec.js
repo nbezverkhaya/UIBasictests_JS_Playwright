@@ -2,10 +2,10 @@
 const { test, expect } = require('@playwright/test');
 
 test('First Playwright test', async ({ page }) => {
-    const userName = page.locator('#username')
-    const passWord = page.locator("[type='password']")
-    const signIn = page.locator("#signInBtn")
-    const cardTitles =  page.locator(".card-body a")
+    const userName = page.locator('#username');
+    const passWord = page.locator("[type='password']");
+    const signIn = page.locator("#signInBtn");
+    const cardTitles =  page.locator(".card-body a");
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
     console.log(await page.title());
     // type, fill
@@ -22,3 +22,33 @@ test('First Playwright test', async ({ page }) => {
     const alltitles = await cardTitles.allTextContents();
     console.log(alltitles)
 });
+
+test.only('UIControls', async({ page }) => {
+    const dropdown = page.locator("select.form-control");
+    const signIn = page.locator("#signInBtn");
+    const userName = page.locator('#username');
+    const passWord = page.locator("[type='password']");
+    const radioBtns = page.locator(".customradio");
+    const popupBtnOk = page.locator("#okayBtn");
+    const terms = page.locator('#terms');
+
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+
+    await userName.fill('rahulshetty');
+    await passWord.fill('learning');
+    await dropdown.selectOption("consult");
+    await radioBtns.last().click();
+    await popupBtnOk.click();
+    // gives bul value
+    console.log(await radioBtns.last().isChecked());
+    await expect(radioBtns.last()).toBeChecked();
+    await terms.click();
+    // expect(terms).toBeChecked();
+    // console.log(await terms.isChecked());
+    await terms.uncheck();
+    expect(await terms.isChecked()).toBeFalsy();
+    await page.pause();
+    await signIn.click();
+
+
+})
