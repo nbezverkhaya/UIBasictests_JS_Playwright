@@ -23,7 +23,7 @@ test('First Playwright test', async ({ page }) => {
     console.log(alltitles)
 });
 
-test.only('UIControls', async({ page }) => {
+test('UIControls', async({ page }) => {
     const dropdown = page.locator("select.form-control");
     const signIn = page.locator("#signInBtn");
     const userName = page.locator('#username');
@@ -31,6 +31,7 @@ test.only('UIControls', async({ page }) => {
     const radioBtns = page.locator(".customradio");
     const popupBtnOk = page.locator("#okayBtn");
     const terms = page.locator('#terms');
+    const blinkingText = page.locator('.blinkingText');
 
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
 
@@ -47,8 +48,25 @@ test.only('UIControls', async({ page }) => {
     // console.log(await terms.isChecked());
     await terms.uncheck();
     expect(await terms.isChecked()).toBeFalsy();
-    await page.pause();
+    await expect(blinkingText).toHaveAttribute('class', 'blinkingText');
+    // await page.pause();
     await signIn.click();
+})
 
+test.only('Child windows handle', async({ browser }) =>
+{
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    const blinkingText = page.locator('.blinkingText');
+
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+
+    const [newPage] = await Promise.all([
+        context.waitForEvent('page'), // listen for ant new page to open. Pending/rejected/fulfilled
+        await blinkingText.click(), // new page is opened
+    ]);
+
+    console.log(await newPage.locator('.red').textContent());
+        
 
 })
