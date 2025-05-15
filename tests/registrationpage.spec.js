@@ -2,6 +2,8 @@ const {test} = require('@playwright/test');
 
 test('Registration page', async ({page}) => {
 
+const randomString = Math.random().toString(36).substring(2, 10);
+
 await page.goto('https://rahulshettyacademy.com/client/');
 const regButton = page.locator(".text-reset");
 const emeilField = page.locator("#userEmail");
@@ -14,7 +16,8 @@ const checkbox = page.locator("input[type='checkbox']");
 const myname = "Natnat";
 const mylastname = "draft";
 const myphone = "1234567890";
-const myemeil = "tests7543@gmail.com";
+const myemeil = `${randomString}@gmail.com`;
+console.log(myemeil);
 const mypassword = "Test123321!";
 const registrerButton = page.locator("#login");
 const createdLogIn = page.locator(".btn.btn-primary");

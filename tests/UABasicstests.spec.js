@@ -53,20 +53,26 @@ test('UIControls', async({ page }) => {
     await signIn.click();
 })
 
-test.only('Child windows handle', async({ browser }) =>
+test('Child windows handle', async({ browser }) =>
 {
     const context = await browser.newContext();
     const page = await context.newPage();
     const blinkingText = page.locator('.blinkingText');
+    const userName = page.locator('#username');
 
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
 
+    // const [newPage, newPage2] = await Promise.all([]);
     const [newPage] = await Promise.all([
         context.waitForEvent('page'), // listen for ant new page to open. Pending/rejected/fulfilled
         await blinkingText.click(), // new page is opened
     ]);
-
-    console.log(await newPage.locator('.red').textContent());
-        
-
+    const text = await newPage.locator('.red').textContent();
+    const arrayText = text.split('@');
+    const domain = arrayText[1].split(' ')[0];
+    console.log(text);
+    console.log(arrayText);
+    console.log(domain);
+    await userName.fill(domain);
+    // await page.pause();
 })

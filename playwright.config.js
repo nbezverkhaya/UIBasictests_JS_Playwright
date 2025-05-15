@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
+import { trace } from 'node:console';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -10,17 +11,32 @@ const config = ({
   expect: {
     timeout: 5000,
   },
-  reporter : 'html',
+  reporter: 'html',
   projects: [
     {
-      name: 'fox',
-      use: { browserName: 'firefox',
-        headless : false
-       },
-    }
+      name: 'chrome',
+      use: {
+        browserName: 'chromium',
+        headless: false,
+        screenshot: 'on',
+        // trace: 'on',  - if we want all screenshots, 'off' - for no screenschots
+        trace: 'retain-on-failure',
+      },
+    },
+    /*
+    {
+      name: 'firefox',
+      use: {
+        browserName: 'firefox',
+        headless: false,
+        screenshot: 'on',
+        trace: 'on',
+      },
+    },
+    */
   ],
-  
 });
 
-module.exports = config
+export default config;
 
+// npx playwright test tests/UABasicstests.spec.js --debug
