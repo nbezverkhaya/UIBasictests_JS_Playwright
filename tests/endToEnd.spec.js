@@ -1,18 +1,18 @@
-const {test} = require('@playwright/test');
+const {test, expect} = require('@playwright/test');
 
 test.only('Client app login', async ({page}) =>
 {
     await page.goto('https://rahulshettyacademy.com/client/');
 
     const productName = 'ZARA COAT 3';
-    const emeilField = page.locator("#userEmail");
-    const paswordField = page.locator("#userPassword");
-    const myemeil = "75vkfjcf@gmail.com";
+    const emailField = page.locator("#userEmail");
+    const passwordField = page.locator("#userPassword");
+    const myEmail = "75vkfjcf@gmail.com";
     const mypassword = "Test123321!";
     const loginButton = page.locator("#login");
 
-    await emeilField.fill(myemeil);
-    await paswordField.fill(mypassword);
+    await emailField.fill(myEmail);
+    await passwordField.fill(mypassword);
     await loginButton.click();
     await page.locator(".card-body b").first().waitFor();
     const products = page.locator(".card-body b");
@@ -32,19 +32,22 @@ test.only('Client app login', async ({page}) =>
     const allCartButtons = page.locator('.fa.fa-shopping-cart');
     await allCartButtons.first().click();
 
-    const allProdictsInCart = page.locator('.cartSection');
-    await allProdictsInCart.first().waitFor();
-    const countAddedProducts = await allProdictsInCart.count();
+    const allProductsInCart = page.locator('.cartSection');
+    await allProductsInCart.first().waitFor()
 
-    for(let i = 0; 1<countAddedProducts; ++i)
+    // the first way to find the added product in the cart:
+    const countAddedProducts = await allProductsInCart.count();
+    for(let i = 0; i<countAddedProducts; ++i)
     {
-        if(await allProdictsInCart.nth(i).locator('h3').textContent() === productName)
+        if(await allProductsInCart.nth(i).locator('h3').textContent() === productName)
         {
             console.log(productName, "is added");
             break;
         }
-
     }
+    // the second way to find the added product in the cart:
+    // const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible();
+    // expect(bool).toBeTruthy();
 
     await page.pause();
 
