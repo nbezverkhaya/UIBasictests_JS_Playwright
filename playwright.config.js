@@ -16,8 +16,8 @@ const config = ({
     {
       name: 'chrome',
       use: {
-        // browserName: 'chromium',
-        browserName: 'firefox',
+        browserName: 'chromium',
+        // browserName: 'firefox',
         headless: false,
         screenshot: 'on',
         // trace: 'on',  - if we want all screenshots, 'off' - for no screenschots

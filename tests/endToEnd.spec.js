@@ -33,7 +33,7 @@ test.only('Client app login', async ({page}) =>
     await allCartButtons.first().click();
 
     const allProductsInCart = page.locator('.cartSection');
-    await allProductsInCart.first().waitFor()
+    await allProductsInCart.first().waitFor();
 
     // the first way to find the added product in the cart:
     const countAddedProducts = await allProductsInCart.count();
@@ -48,6 +48,28 @@ test.only('Client app login', async ({page}) =>
     // the second way to find the added product in the cart:
     // const bool = await page.locator("h3:has-text('ZARA COAT 3')").isVisible();
     // expect(bool).toBeTruthy();
+
+    const checkoutButton = page.locator('.btn.btn-primary').last();
+    await checkoutButton.click();
+
+    const countryInput = page.locator('input[placeholder="Select Country"]');
+    await countryInput.pressSequentially('ukr');
+
+    const countriesDropdown = page.locator('.ta-results');
+    await countriesDropdown.waitFor();
+
+
+    const options = countriesDropdown.locator('button');
+    const optionsCount = await options.count();
+
+    for (let i = 0; i < optionsCount; ++i) {
+        const countryText = await options.nth(i).textContent();
+        if (countryText.trim() === "Ukraine") {
+            await options.nth(i).click();
+            break;
+        }
+    }
+
 
     await page.pause();
 
