@@ -93,7 +93,7 @@ test('Client app login', async ({page}) =>
         const rowOderId = await rows.nth(i).locator('th').textContent();
         // console.log(rowOderId);
         
-        if (orderId.includes(rowOderId));
+        if (orderId.includes(rowOderId))
         {
             await rows.nth(i).locator('button').first().click();
             break;

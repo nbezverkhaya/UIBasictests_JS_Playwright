@@ -1,12 +1,12 @@
 const {test, expect} = require('@playwright/test');
 
-test.only('Client app login', async ({page}) =>
+test.only('Client app login. Special locators', async ({page}) =>
 {
     await page.goto('https://rahulshettyacademy.com/client/');
 
     const productName = 'ZARA COAT 3';
     const emailField = page.getByPlaceholder("email@example.com");
-    const passwordField = page.getByPlaceholder("#enter your password");
+    const passwordField = page.getByPlaceholder("enter your passsword");
     const myEmail = "75vkfjcf@gmail.com";
     const mypassword = "Test123321!";
     const loginButton = page.getByRole("button", {name:"Login"});
@@ -14,16 +14,19 @@ test.only('Client app login', async ({page}) =>
     await emailField.fill(myEmail);
     await passwordField.fill(mypassword);
     await loginButton.click();
-    const products = page.locator(".card-body b");
-    await products.first().waitFor();
-    await products.filter({hasText: productName}).getByRole('button', {name: 'Add to Cart'}).click();
 
-    const page.getByRole('listitem').getByRole('button', {name: 'Cart'}).click();
+    await page.waitForLoadState('networkidle');
+    await page.locator(".card-body b").first().waitFor();
+    const card = page.locator(".card-body")
+    await card.filter({hasText: productName}).getByRole('button', {name: 'Add to Cart'}).click();
+
+    await page.getByRole('listitem').getByRole('button', {name: 'Cart'}).click();
 
     const allProductsInCart = page.locator('.cartSection');
     await allProductsInCart.first().waitFor();
 
-    await expect(page.getByText(productName)).toBeVisible();
+    await expect(allProductsInCart.filter({hasText: productName})).toBeVisible();
+    // await expect(page.getByText(productName)).toBeVisible();
 
     const checkoutButton = page.getByRole('button', {name: "Checkout"});
     await checkoutButton.click();
@@ -56,11 +59,11 @@ test.only('Client app login', async ({page}) =>
         const rowOderId = await rows.nth(i).locator('th').textContent();
         // console.log(rowOderId);
         
-        if (orderId.includes(rowOderId));
-        {
+        if (orderId.includes(rowOderId)) {
             await rows.nth(i).locator('button').first().click();
             break;
         }
+
     }  
 
     const orderIdDetails = await page.locator('.col-text').textContent();
