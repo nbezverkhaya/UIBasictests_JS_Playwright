@@ -48,7 +48,7 @@ test.only('Client app login. Special locators', async ({page}) =>
 
     const orderId = await page.locator('.em-spacer-1 .ng-star-inserted').textContent();
     // console.log(orderId);
-    const ordersButton = page.locator('.btn.btn-custom').nth(1);
+    const ordersButton = page.getByRole('button', {name: "ORDERS"});
     await ordersButton.click();
 
     await page.locator('tbody').waitFor();
@@ -58,20 +58,17 @@ test.only('Client app login. Special locators', async ({page}) =>
     {
         const rowOderId = await rows.nth(i).locator('th').textContent();
         // console.log(rowOderId);
-        
-        if (orderId.includes(rowOderId)) {
-            await rows.nth(i).locator('button').first().click();
+        if (orderId.includes(rowOderId))
+        {
+            await rows.nth(i).getByRole('button', {name: 'View'}).click();
             break;
         }
-
     }  
 
     const orderIdDetails = await page.locator('.col-text').textContent();
     expect(orderId.includes(orderIdDetails)).toBeTruthy();
+    console.log(orderIdDetails);
 
-    
-
-    
 
     // await page.pause();
 
