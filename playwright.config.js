@@ -22,7 +22,11 @@ const config = ({
         screenshot: 'on',
         // trace: 'on',  - if we want all screenshots, 'off' - for no screenschots
         trace: 'retain-on-failure',
-      },
+        launchOptions: {
+          args: ['--start-maximized'],
+        },
+        viewport: null,
+      }
     },
     /*
     {
