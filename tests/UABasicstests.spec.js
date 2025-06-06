@@ -23,7 +23,7 @@ test('First Playwright test', async ({ page }) => {
     console.log(alltitles)
 });
 
-test.only('UIControls', async({ page }) => {
+test('UIControls', async({ page }) => {
     const dropdown = page.locator("select.form-control");
     const signIn = page.locator("#signInBtn");
     const userName = page.locator('#username');
