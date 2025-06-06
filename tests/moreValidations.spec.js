@@ -25,7 +25,7 @@ test('Hover and select', async({page}) =>
     await page.getByText('Top').click();
 });
 
-test.only('iframe validation', async({page}) =>
+test('iframe validation', async({page}) =>
 {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     const framesPage = page.frameLocator('#courses-iframe');
