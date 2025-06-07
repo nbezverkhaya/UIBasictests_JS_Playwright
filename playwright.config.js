@@ -28,17 +28,7 @@ const config = ({
         viewport: null,
       }
     },
-    /*
-    {
-      name: 'firefox',
-      use: {
-        browserName: 'firefox',
-        headless: false,
-        screenshot: 'on',
-        trace: 'on',
-      },
-    },
-    */
+
   ],
 });
 
