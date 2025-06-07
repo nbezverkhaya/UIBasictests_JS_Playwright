@@ -38,5 +38,5 @@ test('should select the correct date in calendar', async ({page}) =>
         expect(value).toEqual(expectedDateList[index - 1]);
     }
 
-    await page.pause();
+    // await page.pause();
 })
